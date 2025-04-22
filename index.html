@@ -49,6 +49,22 @@
     .btn:hover {
       background-color: #e0c28f;
     }
+    .logo-real {
+  width: 50%;
+  max-width: 300px;
+  display: block;
+  margin: 20px auto;
+  animation: brilloReal 3s infinite alternate;
+}
+
+@keyframes brilloReal {
+  from {
+    filter: drop-shadow(0 0 5px gold);
+  }
+  to {
+    filter: drop-shadow(0 0 20px #ffd700);
+  }
+}
     .quote {
       font-style: italic;
       color: #a0a0a0;
@@ -58,7 +74,7 @@
   </style>
 </head>
 <body>
-  <img src="Logo-cumbre-real.png" alt="Logo Cumbre Real" style="max-width: 100%; height: auto; display: block; margin: 20px auto; width: 300px;">
+ <img src="Logo-cumbre-real.png" alt="Logo Cumbre Real" style="width: 50%; max-width: 300px; display: block; margin: 20px auto;">
   <div class="overlay">
     <h1>Bienvenido al Círculo Real</h1>
     <p>
