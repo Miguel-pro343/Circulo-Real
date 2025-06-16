@@ -3,28 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel del Círculo Real</title>
+  <title>Círculo Real</title>
   <style>
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background-color: #0f0f0f;
-      color: #d4af37; /* dorado elegante */
-      display: flex;
-      height: 100vh;
+      background-color: #0e0e0e;
+      color: #d4af37;
+      overflow-x: hidden;
     }
 
-    /* Barra lateral */
+    /* Botón Hamburguesa */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+    }
+
+    .menu-btn span {
+      background-color: #d4af37;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    /* Sidebar */
     .sidebar {
-      width: 20%;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
       background-color: #1a1a1a;
-      padding: 2rem;
-      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+      padding: 2rem 1rem;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.6);
+      transition: left 0.4s ease;
+      z-index: 999;
+    }
+
+    .sidebar.active {
+      left: 0;
     }
 
     .sidebar h2 {
-      margin-top: 0;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .sidebar ul {
@@ -34,8 +63,8 @@
 
     .sidebar ul li {
       margin: 1rem 0;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .sidebar ul li:hover {
@@ -44,9 +73,13 @@
 
     /* Contenido principal */
     .main-content {
-      width: 80%;
-      padding: 2rem;
-      overflow-y: auto;
+      padding: 3rem 2rem;
+      margin-left: 0;
+      transition: margin-left 0.4s ease;
+    }
+
+    .main-content.active {
+      margin-left: 250px;
     }
 
     .seccion {
@@ -55,77 +88,138 @@
 
     .seccion.activa {
       display: block;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .titulo {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 2.2rem;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
     }
 
-    .dorado {
-      color: #d4af37;
+    .adorno {
+      background: linear-gradient(90deg, #d4af37 0%, transparent 100%);
+      height: 4px;
+      border-radius: 10px;
+      margin-bottom: 2rem;
     }
+
+    textarea {
+      background-color: #1a1a1a;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      padding: 10px;
+      font-family: 'Georgia', serif;
+    }
+
+    button {
+      background-color: transparent;
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d4af37;
+      color: #000;
+    }
+
   </style>
 </head>
 <body>
-  <!-- 🟡 Barra lateral -->
-  <div class="sidebar">
-    <h2>Mi Perfil</h2>
+
+  <!-- Botón Hamburguesa -->
+  <div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <h2>Menú</h2>
     <ul>
       <li onclick="mostrar('perfil')">👤 Perfil</li>
       <li onclick="mostrar('recompensas')">🎁 Recompensas</li>
       <li onclick="mostrar('testimonios')">📝 Testimonios</li>
       <li onclick="mostrar('experiencias')">🌟 Experiencias</li>
-      <li onclick="mostrar('chat')">🤖 Chat con IA</li>
+      <li onclick="mostrar('chat')">🤖 Chat IA</li>
       <li onclick="mostrar('lugares')">📍 Puntos de venta</li>
+      <li onclick="mostrar('legado')">📖 Legado Real</li>
     </ul>
   </div>
 
-  <!-- ⚪ Contenido principal -->
-  <div class="main-content">
+  <!-- Contenido principal -->
+  <div id="contenido" class="main-content">
     <div id="perfil" class="seccion activa">
-      <h2 class="titulo dorado">Bienvenido, Aliado</h2>
+      <h2 class="titulo">Bienvenido, Aliado</h2>
+      <div class="adorno"></div>
       <p><strong>Correo:</strong> usuario@ejemplo.com</p>
       <p><strong>Código de acceso:</strong> 123-XYZ</p>
     </div>
 
     <div id="recompensas" class="seccion">
-      <h2 class="titulo dorado">Tus Recompensas</h2>
-      <p>Aquí podrás ver tus puntos acumulados y premios desbloqueados.</p>
+      <h2 class="titulo">Tus Recompensas</h2>
+      <div class="adorno"></div>
+      <p>Aquí podrás ver tus puntos y premios.</p>
     </div>
 
     <div id="testimonios" class="seccion">
-      <h2 class="titulo dorado">Testimonios de la comunidad</h2>
-      <p>Lee lo que otros aliados han dicho sobre Café Cumbre Real.</p>
+      <h2 class="titulo">Testimonios</h2>
+      <div class="adorno"></div>
+      <p>Lo que opinan otros aliados del café.</p>
     </div>
 
     <div id="experiencias" class="seccion">
-      <h2 class="titulo dorado">Sube tu experiencia</h2>
-      <textarea placeholder="Cuéntanos tu experiencia..." rows="5" style="width:100%;"></textarea>
-      <br />
-      <button onclick="alert('¡Gracias por compartir!')" style="margin-top:1rem;">Enviar</button>
+      <h2 class="titulo">Sube tu experiencia</h2>
+      <div class="adorno"></div>
+      <textarea rows="5" placeholder="Cuéntanos tu experiencia..."></textarea>
+      <br><br>
+      <button>Enviar experiencia</button>
     </div>
 
     <div id="chat" class="seccion">
-      <h2 class="titulo dorado">Chat con IA</h2>
-      <p>(Aquí más adelante puedes conectar a un bot o IA que ayude con preguntas sobre el café, pedidos, recomendaciones, etc.)</p>
+      <h2 class="titulo">Chat con IA</h2>
+      <div class="adorno"></div>
+      <p>Próximamente podrás conversar con un aliado virtual.</p>
     </div>
 
     <div id="lugares" class="seccion">
-      <h2 class="titulo dorado">Puntos de venta</h2>
-      <p>Puedes encontrar Café Cumbre Real en:</p>
+      <h2 class="titulo">Puntos de venta</h2>
+      <div class="adorno"></div>
       <ul>
         <li>📍 Tapachula - Tienda El Aroma</li>
         <li>📍 Unión Juárez - Casa Grande</li>
-        <li>📍 En línea: www.cumbreal.com</li>
       </ul>
+    </div>
+
+    <div id="legado" class="seccion">
+      <h2 class="titulo">Legado Real</h2>
+      <div class="adorno"></div>
+      <p>Desde las primeras semillas traídas por los antiguos... hasta las tierras que ahora cultivamos. Aquí conocerás la historia que dio origen a Café Cumbre Real, los desafíos de la montaña, la tradición de generaciones, y cómo cada bolsa de café es más que una bebida: es un símbolo.</p>
+      <p><em>"El café no se vende. Se honra."</em></p>
     </div>
   </div>
 
-  <!-- Script -->
+  <!-- Scripts -->
   <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const contenido = document.getElementById("contenido");
+      sidebar.classList.toggle("active");
+      contenido.classList.toggle("active");
+    }
+
     function mostrar(id) {
-      document.querySelectorAll('.seccion').forEach(div => div.classList.remove('activa'));
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
       document.getElementById(id).classList.add('activa');
     }
   </script>
