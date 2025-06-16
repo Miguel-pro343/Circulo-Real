@@ -1,87 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil del Círculo Real</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel del Círculo Real</title>
   <style>
     body {
-      background-color: #0f0f0f;
-      color: #e0e0e0;
-      font-family: 'Georgia', serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      padding: 20px;
+      font-family: 'Georgia', serif;
+      background-color: #0f0f0f;
+      color: #d4af37; /* dorado elegante */
+      display: flex;
+      height: 100vh;
     }
-    .perfil {
-      border: 2px solid #ca8a75;
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 0 25px rgba(202, 138, 117, 0.6);
+
+    /* Barra lateral */
+    .sidebar {
+      width: 20%;
+      background-color: #1a1a1a;
+      padding: 2rem;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
     }
-    h1 {
-      color: #ca8a75;
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
     }
-    .nivel {
-      font-size: 1.3em;
-      margin-top: 10px;
-      color: #ffd700;
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
     }
-    .beneficios {
-      margin-top: 20px;
-      text-align: left;
+
+    .sidebar ul li {
+      margin: 1rem 0;
+      cursor: pointer;
+      font-weight: bold;
     }
-    .beneficios li {
-      margin-bottom: 10px;
+
+    .sidebar ul li:hover {
+      color: #fff;
+    }
+
+    /* Contenido principal */
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .seccion {
+      display: none;
+    }
+
+    .seccion.activa {
+      display: block;
+    }
+
+    .titulo {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .dorado {
+      color: #d4af37;
     }
   </style>
 </head>
 <body>
-  <div class="perfil">
-    <h1>Bienvenido al Círculo Real</h1>
-    <p id="correo"></p>
-    <p class="nivel" id="nivel"></p>
-    <ul class="beneficios" id="beneficios"></ul>
+  <!-- 🟡 Barra lateral -->
+  <div class="sidebar">
+    <h2>Mi Perfil</h2>
+    <ul>
+      <li onclick="mostrar('perfil')">👤 Perfil</li>
+      <li onclick="mostrar('recompensas')">🎁 Recompensas</li>
+      <li onclick="mostrar('testimonios')">📝 Testimonios</li>
+      <li onclick="mostrar('experiencias')">🌟 Experiencias</li>
+      <li onclick="mostrar('chat')">🤖 Chat con IA</li>
+      <li onclick="mostrar('lugares')">📍 Puntos de venta</li>
+    </ul>
   </div>
 
+  <!-- ⚪ Contenido principal -->
+  <div class="main-content">
+    <div id="perfil" class="seccion activa">
+      <h2 class="titulo dorado">Bienvenido, Aliado</h2>
+      <p><strong>Correo:</strong> usuario@ejemplo.com</p>
+      <p><strong>Código de acceso:</strong> 123-XYZ</p>
+    </div>
+
+    <div id="recompensas" class="seccion">
+      <h2 class="titulo dorado">Tus Recompensas</h2>
+      <p>Aquí podrás ver tus puntos acumulados y premios desbloqueados.</p>
+    </div>
+
+    <div id="testimonios" class="seccion">
+      <h2 class="titulo dorado">Testimonios de la comunidad</h2>
+      <p>Lee lo que otros aliados han dicho sobre Café Cumbre Real.</p>
+    </div>
+
+    <div id="experiencias" class="seccion">
+      <h2 class="titulo dorado">Sube tu experiencia</h2>
+      <textarea placeholder="Cuéntanos tu experiencia..." rows="5" style="width:100%;"></textarea>
+      <br />
+      <button onclick="alert('¡Gracias por compartir!')" style="margin-top:1rem;">Enviar</button>
+    </div>
+
+    <div id="chat" class="seccion">
+      <h2 class="titulo dorado">Chat con IA</h2>
+      <p>(Aquí más adelante puedes conectar a un bot o IA que ayude con preguntas sobre el café, pedidos, recomendaciones, etc.)</p>
+    </div>
+
+    <div id="lugares" class="seccion">
+      <h2 class="titulo dorado">Puntos de venta</h2>
+      <p>Puedes encontrar Café Cumbre Real en:</p>
+      <ul>
+        <li>📍 Tapachula - Tienda El Aroma</li>
+        <li>📍 Unión Juárez - Casa Grande</li>
+        <li>📍 En línea: www.cumbreal.com</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Script -->
   <script>
-    const correo = localStorage.getItem("usuarioCorreo");
-    const nivel = localStorage.getItem("usuarioNivel");
-
-    const beneficios = {
-      "Oro": [
-        "Acceso prioritario a lotes especiales",
-        "Envíos gratis",
-        "Descuentos exclusivos",
-        "Café edición limitada"
-      ],
-      "Plata": [
-        "Acceso anticipado a nuevos lotes",
-        "Descuento del 10%",
-        "Boletines secretos"
-      ],
-      "Bronce": [
-        "Acceso básico al Círculo",
-        "Descuento del 5%",
-        "Historias del café"
-      ]
-    };
-
-    document.getElementById("correo").textContent = `Correo registrado: ${correo}`;
-    document.getElementById("nivel").textContent = `Nivel de miembro: ${nivel}`;
-
-    const lista = document.getElementById("beneficios");
-    beneficios[nivel]?.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      lista.appendChild(li);
-    });
+    function mostrar(id) {
+      document.querySelectorAll('.seccion').forEach(div => div.classList.remove('activa'));
+      document.getElementById(id).classList.add('activa');
+    }
   </script>
 </body>
 </html>
