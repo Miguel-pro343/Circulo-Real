@@ -1,186 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Círculo Real</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Georgia', serif;
-      background-color: #0e0e0e;
-      color: #d4af37;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Círculo Real - Café Cumbre Real</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f4ef;
+            color: #333;
+        }
 
-    /* Barra de navegación */
-    .navbar {
-      display: flex;
-      background-color: #1a1a1a;
-      padding: 1rem 2rem;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #d4af37;
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1f1f1f;
+            color: #d4af37; /* dorado */
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
 
-    .navbar h1 {
-      font-size: 1.5rem;
-      color: #d4af37;
-      margin: 0;
-    }
+        header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
+        .menu-icon {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
 
-    .nav-links a {
-      color: #d4af37;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      padding-bottom: 5px;
-      transition: border-bottom 0.3s ease;
-    }
+        .menu-icon div {
+            width: 25px;
+            height: 3px;
+            background-color: #d4af37;
+            margin: 4px 0;
+            transition: all 0.4s;
+        }
 
-    .nav-links a:hover, .nav-links a.active {
-      border-bottom: 2px solid #d4af37;
-    }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
 
-    /* Contenido principal */
-    .main-content {
-      padding: 2rem;
-    }
+        nav a {
+            text-decoration: none;
+            color: #d4af37;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
 
-    .seccion {
-      display: none;
-    }
+        nav a:hover {
+            color: #fff;
+        }
 
-    .seccion.activa {
-      display: block;
-      animation: fadeIn 0.5s ease-in;
-    }
+        .contenido {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .contenido h2 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
 
-    .titulo {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #d4af37;
-      padding-bottom: 5px;
-    }
+        /* Responsive - menú hamburguesa */
+        @media (max-width: 768px) {
+            nav {
+                position: absolute;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                background-color: #1f1f1f;
+                width: 200px;
+                height: 100vh;
+                padding-top: 20px;
+                gap: 15px;
+                transition: left 0.3s;
+            }
 
-    .adorno {
-      height: 4px;
-      background: linear-gradient(90deg, #d4af37, transparent);
-      border-radius: 10px;
-      margin: 1rem 0 2rem;
-    }
+            nav.active {
+                left: 0;
+            }
 
-    textarea {
-      background-color: #1a1a1a;
-      border: 1px solid #d4af37;
-      color: #d4af37;
-      padding: 10px;
-      width: 100%;
-      font-family: 'Georgia', serif;
-    }
-
-    button {
-      background-color: transparent;
-      border: 2px solid #d4af37;
-      color: #d4af37;
-      padding: 10px 20px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #d4af37;
-      color: #000;
-    }
-  </style>
+            .menu-icon {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Barra de navegación -->
-  <div class="navbar">
-    <h1>Círculo Real</h1>
-    <div class="nav-links">
-      <a class="active" onclick="mostrar('perfil')">Perfil</a>
-      <a onclick="mostrar('recompensas')">Recompensas</a>
-      <a onclick="mostrar('testimonios')">Testimonios</a>
-      <a onclick="mostrar('experiencias')">Experiencias</a>
-      <a onclick="mostrar('chat')">Chat IA</a>
-      <a onclick="mostrar('lugares')">Puntos de venta</a>
-      <a onclick="mostrar('legado')">Legado Real</a>
-    </div>
-  </div>
+    <header>
+        <h1>Círculo Real - Café Cumbre Real</h1>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="menu">
+            <a href="#">Perfil</a>
+            <a href="#">Recompensas</a>
+            <a href="#">Testimonios</a>
+            <a href="#">Experiencias</a>
+            <a href="#">Chat IA</a>
+            <a href="#">Dónde comprar</a>
+            <a href="#">Historias de Cumbre Real</a>
+        </nav>
+    </header>
 
-  <!-- Contenido principal -->
-  <div class="main-content">
-    <div id="perfil" class="seccion activa">
-      <h2 class="titulo">Bienvenido, Aliado</h2>
-      <div class="adorno"></div>
-      <p><strong>Correo:</strong> usuario@ejemplo.com</p>
-      <p><strong>Código de acceso:</strong> 123-XYZ</p>
-    </div>
+    <div class="contenido">
+        <h2>Historias de Cumbre Real</h2>
+        <p>Aquí podrás descubrir los secretos, la historia y el legado del Café Cumbre Real. 
+        Este espacio es exclusivo para nuestros miembros del Círculo Real.</p>
 
-    <div id="recompensas" class="seccion">
-      <h2 class="titulo">Tus Recompensas</h2>
-      <div class="adorno"></div>
-      <p>Aquí podrás ver tus puntos y premios acumulados.</p>
+        <p>🔸 Comparte tu experiencia, acumula puntos y sé parte de la historia.</p>
     </div>
 
-    <div id="testimonios" class="seccion">
-      <h2 class="titulo">Testimonios</h2>
-      <div class="adorno"></div>
-      <p>Lo que opinan otros aliados del café.</p>
-    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 
-    <div id="experiencias" class="seccion">
-      <h2 class="titulo">Sube tu experiencia</h2>
-      <div class="adorno"></div>
-      <textarea rows="5" placeholder="Cuéntanos tu experiencia..."></textarea>
-      <br>
-      <button>Enviar experiencia</button>
-    </div>
-
-    <div id="chat" class="seccion">
-      <h2 class="titulo">Chat con IA</h2>
-      <div class="adorno"></div>
-      <p>Próximamente podrás conversar con un aliado virtual.</p>
-    </div>
-
-    <div id="lugares" class="seccion">
-      <h2 class="titulo">Puntos de venta</h2>
-      <div class="adorno"></div>
-      <ul>
-        <li>📍 Tapachula - Tienda El Aroma</li>
-        <li>📍 Unión Juárez - Casa Grande</li>
-      </ul>
-    </div>
-
-    <div id="legado" class="seccion">
-      <h2 class="titulo">Legado Real</h2>
-      <div class="adorno"></div>
-      <p>Desde las primeras semillas traídas por los antiguos... hasta las tierras que ahora cultivamos. Aquí conocerás la historia que dio origen a Café Cumbre Real.</p>
-      <p><em>"El café no se vende. Se honra."</em></p>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    function mostrar(id) {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
-      document.getElementById(id).classList.add('activa');
-
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-      event.target.classList.add('active');
-    }
-  </script>
 </body>
 </html>
