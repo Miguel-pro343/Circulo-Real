@@ -2,118 +2,53 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Círculo Real</title>
   <style>
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background-color: #0b0b0b;
+      background-color: #0e0e0e;
       color: #d4af37;
-      overflow-x: hidden;
     }
 
-    .pantalla-inicial {
-      height: 100vh;
+    /* Barra de navegación */
+    .navbar {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .pantalla-inicial h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .pantalla-inicial input {
-      padding: 10px;
-      font-size: 1rem;
       background-color: #1a1a1a;
-      border: 1px solid #d4af37;
-      color: #d4af37;
-      margin-bottom: 1rem;
-    }
-
-    .pantalla-inicial button {
-      background-color: transparent;
-      border: 2px solid #d4af37;
-      color: #d4af37;
-      padding: 10px 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .pantalla-inicial button:hover {
-      background-color: #d4af37;
-      color: #000;
-    }
-
-    .menu-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
+      padding: 1rem 2rem;
       justify-content: space-between;
-      width: 30px;
-      height: 20px;
+      align-items: center;
+      border-bottom: 2px solid #d4af37;
     }
 
-    .menu-btn span {
-      background-color: #d4af37;
-      height: 3px;
-      border-radius: 2px;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #141414;
-      padding: 2rem 1rem;
-      box-shadow: 5px 0 15px rgba(0,0,0,0.6);
-      transition: left 0.4s ease;
-      z-index: 999;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar h2 {
+    .navbar h1 {
       font-size: 1.5rem;
-      margin-bottom: 1rem;
+      color: #d4af37;
+      margin: 0;
     }
 
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
     }
 
-    .sidebar ul li {
-      margin: 1rem 0;
+    .nav-links a {
+      color: #d4af37;
+      text-decoration: none;
       font-weight: bold;
       cursor: pointer;
+      padding-bottom: 5px;
+      transition: border-bottom 0.3s ease;
     }
 
-    .sidebar ul li:hover {
-      color: #fff;
+    .nav-links a:hover, .nav-links a.active {
+      border-bottom: 2px solid #d4af37;
     }
 
+    /* Contenido principal */
     .main-content {
-      padding: 3rem 2rem;
-      margin-left: 0;
-      transition: margin-left 0.4s ease;
-    }
-
-    .main-content.active {
-      margin-left: 250px;
+      padding: 2rem;
     }
 
     .seccion {
@@ -131,52 +66,64 @@
     }
 
     .titulo {
-      font-size: 2.2rem;
+      font-size: 2rem;
+      margin-bottom: 1rem;
       border-bottom: 2px solid #d4af37;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      padding-bottom: 5px;
     }
 
     .adorno {
-      background: linear-gradient(90deg, #d4af37 0%, transparent 100%);
       height: 4px;
+      background: linear-gradient(90deg, #d4af37, transparent);
       border-radius: 10px;
-      margin-bottom: 2rem;
+      margin: 1rem 0 2rem;
+    }
+
+    textarea {
+      background-color: #1a1a1a;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      padding: 10px;
+      width: 100%;
+      font-family: 'Georgia', serif;
+    }
+
+    button {
+      background-color: transparent;
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #d4af37;
+      color: #000;
     }
   </style>
 </head>
 <body>
 
-  <!-- Pantalla Inicial -->
-  <div id="inicio" class="pantalla-inicial">
-    <h1>Ingresa tu nombre</h1>
-    <input type="text" id="nombreUsuario" placeholder="Tu nombre..." />
-    <button onclick="entrar()">Entrar</button>
+  <!-- Barra de navegación -->
+  <div class="navbar">
+    <h1>Círculo Real</h1>
+    <div class="nav-links">
+      <a class="active" onclick="mostrar('perfil')">Perfil</a>
+      <a onclick="mostrar('recompensas')">Recompensas</a>
+      <a onclick="mostrar('testimonios')">Testimonios</a>
+      <a onclick="mostrar('experiencias')">Experiencias</a>
+      <a onclick="mostrar('chat')">Chat IA</a>
+      <a onclick="mostrar('lugares')">Puntos de venta</a>
+      <a onclick="mostrar('legado')">Legado Real</a>
+    </div>
   </div>
 
-  <!-- Botón Hamburguesa -->
-  <div class="menu-btn" style="display: none;" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
-    <h2>Menú</h2>
-    <ul>
-      <li onclick="mostrar('perfil')">👤 Perfil</li>
-      <li onclick="mostrar('recompensas')">🎁 Recompensas</li>
-      <li onclick="mostrar('testimonios')">📝 Testimonios</li>
-      <li onclick="mostrar('experiencias')">🌟 Experiencias</li>
-      <li onclick="mostrar('chat')">🤖 Chat IA</li>
-      <li onclick="mostrar('lugares')">📍 Puntos de venta</li>
-      <li onclick="mostrar('legado')">📖 Legado Real</li>
-    </ul>
-  </div>
-
-  <!-- Contenido Principal -->
-  <div id="contenido" class="main-content" style="display: none;">
+  <!-- Contenido principal -->
+  <div class="main-content">
     <div id="perfil" class="seccion activa">
-      <h2 class="titulo" id="bienvenida">Bienvenido, Aliado</h2>
+      <h2 class="titulo">Bienvenido, Aliado</h2>
       <div class="adorno"></div>
       <p><strong>Correo:</strong> usuario@ejemplo.com</p>
       <p><strong>Código de acceso:</strong> 123-XYZ</p>
@@ -185,7 +132,7 @@
     <div id="recompensas" class="seccion">
       <h2 class="titulo">Tus Recompensas</h2>
       <div class="adorno"></div>
-      <p>Aquí podrás ver tus puntos y premios.</p>
+      <p>Aquí podrás ver tus puntos y premios acumulados.</p>
     </div>
 
     <div id="testimonios" class="seccion">
@@ -198,7 +145,7 @@
       <h2 class="titulo">Sube tu experiencia</h2>
       <div class="adorno"></div>
       <textarea rows="5" placeholder="Cuéntanos tu experiencia..."></textarea>
-      <br><br>
+      <br>
       <button>Enviar experiencia</button>
     </div>
 
@@ -220,34 +167,19 @@
     <div id="legado" class="seccion">
       <h2 class="titulo">Legado Real</h2>
       <div class="adorno"></div>
-      <p>Desde las primeras semillas traídas por los antiguos... hasta las tierras que ahora cultivamos. Aquí conocerás la historia que dio origen a Café Cumbre Real, los desafíos de la montaña, la tradición de generaciones, y cómo cada bolsa de café es más que una bebida: es un símbolo.</p>
+      <p>Desde las primeras semillas traídas por los antiguos... hasta las tierras que ahora cultivamos. Aquí conocerás la historia que dio origen a Café Cumbre Real.</p>
       <p><em>"El café no se vende. Se honra."</em></p>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById("sidebar");
-      const contenido = document.getElementById("contenido");
-      sidebar.classList.toggle("active");
-      contenido.classList.toggle("active");
-    }
-
     function mostrar(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
       document.getElementById(id).classList.add('activa');
-    }
 
-    function entrar() {
-      const nombre = document.getElementById("nombreUsuario").value.trim();
-      if (nombre) {
-        document.getElementById("inicio").style.display = "none";
-        document.querySelector(".menu-btn").style.display = "flex";
-        document.getElementById("contenido").style.display = "block";
-        document.getElementById("bienvenida").innerText = `Bienvenido, ${nombre}`;
-      } else {
-        alert("Por favor, escribe tu nombre.");
-      }
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      event.target.classList.add('active');
     }
   </script>
 </body>
