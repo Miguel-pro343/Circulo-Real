@@ -2,134 +2,135 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Círculo Real - Café Cumbre Real</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f4ef;
-            color: #333;
+            font-family: Arial, sans-serif;
+            background-color: #f9f5f0;
         }
-
         header {
+            background-color: #1a1a1a;
+            color: #d4af37;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #1f1f1f;
-            color: #d4af37; /* dorado */
             padding: 10px 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-
-        header h1 {
-            font-size: 20px;
-            margin: 0;
-        }
-
         .menu-icon {
             display: none;
-            flex-direction: column;
+            font-size: 24px;
             cursor: pointer;
         }
-
-        .menu-icon div {
-            width: 25px;
-            height: 3px;
-            background-color: #d4af37;
-            margin: 4px 0;
-            transition: all 0.4s;
-        }
-
-        nav {
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
             display: flex;
-            gap: 20px;
         }
-
+        nav li {
+            margin: 0 15px;
+        }
         nav a {
             text-decoration: none;
             color: #d4af37;
             font-weight: bold;
-            transition: color 0.3s;
         }
-
-        nav a:hover {
-            color: #fff;
-        }
-
-        .contenido {
-            max-width: 1200px;
-            margin: 30px auto;
+        .main-content {
             padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
         }
-
-        .contenido h2 {
+        .main-content h1 {
             color: #d4af37;
-            margin-bottom: 10px;
+        }
+        /* Estilo para el menú lateral en celular */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #1a1a1a;
+            padding-top: 60px;
+            transition: left 0.3s ease;
+            z-index: 999;
+        }
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+        .side-menu li {
+            padding: 15px 20px;
+        }
+        .side-menu a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+        }
+        .side-menu.open {
+            left: 0;
         }
 
-        /* Responsive - menú hamburguesa */
+        /* Responsive para móvil */
         @media (max-width: 768px) {
-            nav {
-                position: absolute;
-                top: 60px;
-                left: -100%;
-                flex-direction: column;
-                background-color: #1f1f1f;
-                width: 200px;
-                height: 100vh;
-                padding-top: 20px;
-                gap: 15px;
-                transition: left 0.3s;
-            }
-
-            nav.active {
-                left: 0;
-            }
-
             .menu-icon {
-                display: flex;
+                display: block;
+            }
+            nav {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Círculo Real - Café Cumbre Real</h1>
-        <div class="menu-icon" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <nav id="menu">
-            <a href="#">Perfil</a>
-            <a href="#">Recompensas</a>
-            <a href="#">Testimonios</a>
-            <a href="#">Experiencias</a>
-            <a href="#">Chat IA</a>
-            <a href="#">Dónde comprar</a>
-            <a href="#">Historias de Cumbre Real</a>
-        </nav>
-    </header>
+<header>
+    <div><strong>Círculo Real - Café Cumbre Real</strong></div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <nav>
+        <ul>
+            <li><a href="#perfil">Perfil</a></li>
+            <li><a href="#recompensas">Recompensas</a></li>
+            <li><a href="#testimonios">Testimonios</a></li>
+            <li><a href="#experiencias">Experiencias</a></li>
+            <li><a href="#chat-ia">Chat IA</a></li>
+            <li><a href="#comprar">Puntos de venta</a></li>
+            <li><a href="#historias">Legado Real</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <div class="contenido">
-        <h2>Historias de Cumbre Real</h2>
-        <p>Aquí podrás descubrir los secretos, la historia y el legado del Café Cumbre Real. 
-        Este espacio es exclusivo para nuestros miembros del Círculo Real.</p>
+<div class="side-menu" id="sideMenu">
+    <ul>
+        <li><a href="#perfil" onclick="closeMenu()">Perfil</a></li>
+        <li><a href="#recompensas" onclick="closeMenu()">Recompensas</a></li>
+        <li><a href="#testimonios" onclick="closeMenu()">Testimonios</a></li>
+        <li><a href="#experiencias" onclick="closeMenu()">Experiencias</a></li>
+        <li><a href="#chat-ia" onclick="closeMenu()">Chat IA</a></li>
+        <li><a href="#comprar" onclick="closeMenu()">Puntos de Venta</a></li>
+        <li><a href="#historias" onclick="closeMenu()">Legado Real</a></li>
+    </ul>
+</div>
 
-        <p>🔸 Comparte tu experiencia, acumula puntos y sé parte de la historia.</p>
-    </div>
+<div class="main-content">
+    <h1>Bienvenido a Círculo Real</h1>
+    <p>Descubre los secretos, la historia y la comunidad exclusiva del Café Cumbre Real.</p>
+</div>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('active');
-        }
-    </script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('sideMenu');
+        menu.classList.toggle('open');
+    }
+
+    function closeMenu() {
+        const menu = document.getElementById('sideMenu');
+        menu.classList.remove('open');
+    }
+</script>
 
 </body>
 </html>
+
