@@ -8,12 +8,48 @@
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background-color: #0e0e0e;
+      background-color: #0b0b0b;
       color: #d4af37;
       overflow-x: hidden;
     }
 
-    /* Botón Hamburguesa */
+    .pantalla-inicial {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .pantalla-inicial h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .pantalla-inicial input {
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #1a1a1a;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .pantalla-inicial button {
+      background-color: transparent;
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .pantalla-inicial button:hover {
+      background-color: #d4af37;
+      color: #000;
+    }
+
     .menu-btn {
       position: fixed;
       top: 20px;
@@ -33,14 +69,13 @@
       border-radius: 2px;
     }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
       left: -250px;
       width: 250px;
       height: 100%;
-      background-color: #1a1a1a;
+      background-color: #141414;
       padding: 2rem 1rem;
       box-shadow: 5px 0 15px rgba(0,0,0,0.6);
       transition: left 0.4s ease;
@@ -71,7 +106,6 @@
       color: #fff;
     }
 
-    /* Contenido principal */
     .main-content {
       padding: 3rem 2rem;
       margin-left: 0;
@@ -109,38 +143,20 @@
       border-radius: 10px;
       margin-bottom: 2rem;
     }
-
-    textarea {
-      background-color: #1a1a1a;
-      border: 1px solid #d4af37;
-      color: #d4af37;
-      padding: 10px;
-      font-family: 'Georgia', serif;
-    }
-
-    button {
-      background-color: transparent;
-      border: 2px solid #d4af37;
-      color: #d4af37;
-      padding: 10px 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #d4af37;
-      color: #000;
-    }
-
   </style>
 </head>
 <body>
 
+  <!-- Pantalla Inicial -->
+  <div id="inicio" class="pantalla-inicial">
+    <h1>Ingresa tu nombre</h1>
+    <input type="text" id="nombreUsuario" placeholder="Tu nombre..." />
+    <button onclick="entrar()">Entrar</button>
+  </div>
+
   <!-- Botón Hamburguesa -->
-  <div class="menu-btn" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="menu-btn" style="display: none;" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </div>
 
   <!-- Sidebar -->
@@ -157,10 +173,10 @@
     </ul>
   </div>
 
-  <!-- Contenido principal -->
-  <div id="contenido" class="main-content">
+  <!-- Contenido Principal -->
+  <div id="contenido" class="main-content" style="display: none;">
     <div id="perfil" class="seccion activa">
-      <h2 class="titulo">Bienvenido, Aliado</h2>
+      <h2 class="titulo" id="bienvenida">Bienvenido, Aliado</h2>
       <div class="adorno"></div>
       <p><strong>Correo:</strong> usuario@ejemplo.com</p>
       <p><strong>Código de acceso:</strong> 123-XYZ</p>
@@ -209,7 +225,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     function toggleMenu() {
       const sidebar = document.getElementById("sidebar");
@@ -221,6 +236,18 @@
     function mostrar(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
       document.getElementById(id).classList.add('activa');
+    }
+
+    function entrar() {
+      const nombre = document.getElementById("nombreUsuario").value.trim();
+      if (nombre) {
+        document.getElementById("inicio").style.display = "none";
+        document.querySelector(".menu-btn").style.display = "flex";
+        document.getElementById("contenido").style.display = "block";
+        document.getElementById("bienvenida").innerText = `Bienvenido, ${nombre}`;
+      } else {
+        alert("Por favor, escribe tu nombre.");
+      }
     }
   </script>
 </body>
