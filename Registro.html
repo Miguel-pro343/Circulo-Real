@@ -68,39 +68,17 @@
 <body>
 
   <h1>Registro de Compra</h1>
-  <form id="registroForm">
-    <input type="text" id="nombre" placeholder="Nombre completo" required />
-    <input type="email" id="correo" placeholder="Correo electrónico" required />
-    <input type="text" id="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
+  
+  <!-- FORMULARIO QUE ENVÍA A GOOGLE SHEETS -->
+  <form action="https://script.google.com/macros/s/AKfycbxLi9JmoyA6Cjtzcgl1EzsDBkZJwJrlMxH1jZvD1PSD0WTJqu0x7jyGUQEkRx2loSg/exec" method="POST">
+    <input type="text" name="nombre" placeholder="Nombre completo" required />
+    <input type="email" name="correo" placeholder="Correo electrónico" required />
+    <input type="text" name="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
     <button type="submit">Registrar compra</button>
   </form>
 
   <p>Al registrar tu compra, serás redirigido al Círculo Real.</p>
 
-  <script>
-    document.getElementById('registroForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      // Capturar datos
-      const nombre = document.getElementById('nombre').value.trim();
-      const correo = document.getElementById('correo').value.trim();
-      const codigo = document.getElementById('codigo').value.trim();
-
-      // Validar el código (ejemplo: solo acepta CR001-UN por ahora)
-      if (codigo !== 'CR001-UN') {
-        alert('El código ingresado no es válido.');
-        return;
-      }
-
-      // Guardar en localStorage (temporal, en producción usarías base de datos)
-      localStorage.setItem('nombre', nombre);
-      localStorage.setItem('correo', correo);
-      localStorage.setItem('codigo', codigo);
-
-      // Redirigir a la página principal después del registro
-      window.location.href = 'https://miguel-pro343.github.io/Circulo-Real/';
-    });
-  </script>
-
 </body>
 </html>
+
