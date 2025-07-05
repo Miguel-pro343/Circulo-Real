@@ -70,35 +70,16 @@
   <h1>Registro de Compra</h1>
   
   <!-- FORMULARIO QUE ENVÍA A GOOGLE SHEETS -->
-  <form id="registroForm">
-    <input type="text" name="nombre" placeholder="Nombre completo" required />
-    <input type="email" name="correo" placeholder="Correo electrónico" required />
-    <input type="text" name="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
-    <button type="submit">Registrar compra</button>
-  </form>
+ <form action="https://formspree.io/f/xeokwopp" method="POST">
+  <input type="text" name="nombre" placeholder="Nombre completo" required />
+  <input type="email" name="correo" placeholder="Correo electrónico" required />
+  <input type="text" name="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
+  
+  <!-- Redirección automática después del envío -->
+  <input type="hidden" name="_redirect" value="https://miguel-pro343.github.io/Circulo-Real/" />
 
-  <p>Al registrar tu compra, serás redirigido al Círculo Real.</p>
-
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx_dg499Cl7kTRlBLc9GPj2fYq9DkrV4q3rwNRCRu2wb4i7YVAygz_R0wlkC5gcLsWF/exec';
-    const form = document.getElementById('registroForm');
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-
-      fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => {
-          // Redirigir después de enviar
-          window.location.href = 'https://miguel-pro343.github.io/Circulo-Real/';
-        })
-        .catch(error => {
-          console.error('Error al enviar', error.message);
-          alert('Hubo un error al registrar la compra. Intenta nuevamente.');
-        });
-    });
-  </script>
+  <button type="submit">Registrar compra</button>
+</form>
 
 </body>
 </html>
