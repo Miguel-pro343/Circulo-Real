@@ -12,7 +12,6 @@
       color: #d4af37;
     }
 
-    /* Barra de navegación */
     .navbar {
       display: flex;
       background-color: #1a1a1a;
@@ -47,7 +46,6 @@
       border-bottom: 2px solid #d4af37;
     }
 
-    /* Icono de menú (hamburguesa) */
     .menu-icon {
       display: none;
       font-size: 28px;
@@ -55,7 +53,6 @@
       color: #d4af37;
     }
 
-    /* Menú lateral en móvil */
     .side-menu {
       position: fixed;
       top: 0;
@@ -89,7 +86,6 @@
       left: 0;
     }
 
-    /* Contenido principal */
     .main-content {
       padding: 2rem;
     }
@@ -146,7 +142,12 @@
       color: #000;
     }
 
-    /* Responsive */
+    .nivel {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #ffd700;
+    }
+
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -160,7 +161,6 @@
 </head>
 <body>
 
-  <!-- Barra de navegación -->
   <div class="navbar">
     <h1>Círculo Real</h1>
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
@@ -175,7 +175,6 @@
     </div>
   </div>
 
-  <!-- Menú lateral para móvil -->
   <div class="side-menu" id="sideMenu">
     <ul>
       <li><a onclick="mostrar('perfil'); closeMenu()">Perfil</a></li>
@@ -188,13 +187,14 @@
     </ul>
   </div>
 
-  <!-- Contenido principal -->
   <div class="main-content">
     <div id="perfil" class="seccion activa">
-      <h2 class="titulo">Bienvenido, Aliado</h2>
+      <h2 class="titulo" id="bienvenida">Bienvenido, Aliado</h2>
       <div class="adorno"></div>
-      <p><strong>Correo:</strong> usuario@ejemplo.com</p>
-      <p><strong>Código de acceso:</strong> 123-XYZ</p>
+      <p><strong>Correo:</strong> <span id="correo">usuario@ejemplo.com</span></p>
+      <p><strong>Código de acceso:</strong> <span id="codigo">123-XYZ</span></p>
+      <p class="nivel" id="nivel"></p>
+      <p id="mensajeAliado" style="margin-top: 1.5rem;"></p>
     </div>
 
     <div id="recompensas" class="seccion">
@@ -240,7 +240,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     function mostrar(id) {
       document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
@@ -251,13 +250,41 @@
     }
 
     function toggleMenu() {
-      const menu = document.getElementById('sideMenu');
-      menu.classList.toggle('open');
+      document.getElementById('sideMenu').classList.toggle('open');
     }
 
     function closeMenu() {
-      const menu = document.getElementById('sideMenu');
-      menu.classList.remove('open');
+      document.getElementById('sideMenu').classList.remove('open');
+    }
+
+    // Mostrar datos del aliado desde localStorage
+    const nombre = localStorage.getItem("nombre");
+    const correo = localStorage.getItem("correo");
+    const codigo = localStorage.getItem("codigo");
+
+    if (nombre && correo && codigo) {
+      document.getElementById("bienvenida").textContent = `Bienvenido, ${nombre}`;
+      document.getElementById("correo").textContent = correo;
+      document.getElementById("codigo").textContent = codigo;
+
+      // Asignar nivel por código
+      let nivel = "";
+      if (codigo === "CR001-UN") nivel = "🌟 Miembro Oro";
+      else if (codigo === "CR002-UN") nivel = "🥈 Miembro Plata";
+      else if (codigo === "CR003-UN") nivel = "🥉 Miembro Bronce";
+      else nivel = "🔰 Miembro Nuevo";
+
+      document.getElementById("nivel").textContent = nivel;
+
+      // Mensaje de bienvenida
+      document.getElementById("mensajeAliado").textContent =
+        "Gracias por formar parte de Círculo Real. Tu participación te brinda acceso exclusivo a recompensas, experiencias premium y el legado del mejor café de altura.";
+    } else {
+      document.getElementById("bienvenida").textContent = "Acceso no autorizado";
+      document.getElementById("correo").textContent = "No disponible";
+      document.getElementById("codigo").textContent = "No disponible";
+      document.getElementById("mensajeAliado").textContent =
+        "Por favor, regístrate desde el formulario para acceder al panel.";
     }
   </script>
 
