@@ -76,35 +76,45 @@
     <button type="submit">Registrar compra</button>
   </form>
 
-  <script>
-    const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"]; // Agrega más códigos aquí
+<script>
+  const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"];
+  const form = document.getElementById('registroForm');
 
-    const form = document.getElementById('registroForm');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    const formData = new FormData(form);
+    const codigo = formData.get("codigo").trim();
 
-      const formData = new FormData(form);
-      const codigo = formData.get("codigo").trim();
+    if (!codigosValidos.includes(codigo)) {
+      alert("El código ingresado no es válido. Intenta nuevamente.");
+      return;
+    }
 
-      if (!codigosValidos.includes(codigo)) {
-        alert("El código ingresado no es válido. Intenta nuevamente.");
-        return;
-      }
-
-      fetch("https://formspree.io/f/xeokwopp", {
-        method: "POST",
-        body: formData
-      })
-      .then(() => {
+    fetch("https://formspree.io/f/xeokwopp", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json"
+      },
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        // ✅ Redirige manualmente
         window.location.href = "https://miguel-pro343.github.io/Circulo-Real/Perfil.html";
-      })
-      .catch(error => {
-        alert("Ocurrió un error. Intenta nuevamente.");
-        console.error(error);
-      });
+      } else {
+        return response.json().then(data => {
+          alert(data.error || "Ocurrió un error. Intenta nuevamente.");
+        });
+      }
+    })
+    .catch(error => {
+      alert("Ocurrió un error. Intenta nuevamente.");
+      console.error("Error:", error);
     });
-  </script>
+  });
+</script>
+
 
 </body>
 </html>
