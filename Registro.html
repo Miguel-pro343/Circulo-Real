@@ -84,6 +84,8 @@
     e.preventDefault();
 
     const formData = new FormData(form);
+    const nombre = formData.get("nombre").trim();
+    const correo = formData.get("correo").trim();
     const codigo = formData.get("codigo").trim();
 
     if (!codigosValidos.includes(codigo)) {
@@ -91,6 +93,12 @@
       return;
     }
 
+    // Guardar los datos en localStorage antes de redirigir
+    localStorage.setItem("nombre", nombre);
+    localStorage.setItem("correo", correo);
+    localStorage.setItem("codigo", codigo);
+
+    // Enviar datos a Formspree
     fetch("https://formspree.io/f/xeokwopp", {
       method: "POST",
       headers: {
@@ -100,7 +108,7 @@
     })
     .then(response => {
       if (response.ok) {
-        // ✅ Redirige manualmente
+        // Redirigir al perfil
         window.location.href = "https://miguel-pro343.github.io/Circulo-Real/Perfil.html";
       } else {
         return response.json().then(data => {
@@ -115,6 +123,6 @@
   });
 </script>
 
-
 </body>
 </html>
+
