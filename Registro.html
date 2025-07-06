@@ -69,48 +69,42 @@
 
   <h1>Registro de Compra</h1>
   
-<form id="registroForm">
-  <input type="text" name="nombre" placeholder="Nombre completo" required />
-  <input type="email" name="correo" placeholder="Correo electrónico" required />
-  <input type="text" name="codigo" id="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
+  <form id="registroForm">
+    <input type="text" name="nombre" placeholder="Nombre completo" required />
+    <input type="email" name="correo" placeholder="Correo electrónico" required />
+    <input type="text" name="codigo" id="codigo" placeholder="Código de empaque (ej: CR001-UN)" required />
+    <button type="submit">Registrar compra</button>
+  </form>
 
-  <button type="submit">Registrar compra</button>
-</form>
+  <script>
+    const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"]; // Agrega más códigos aquí
 
-<script>
-  const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"]; // Puedes agregar más aquí
+    const form = document.getElementById('registroForm');
 
-  const form = document.getElementById('registroForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+      const formData = new FormData(form);
+      const codigo = formData.get("codigo").trim();
 
-    const formData = new FormData(form);
-    const codigo = formData.get("codigo").trim();
+      if (!codigosValidos.includes(codigo)) {
+        alert("El código ingresado no es válido. Intenta nuevamente.");
+        return;
+      }
 
-    if (!codigosValidos.includes(codigo)) {
-      alert("El código ingresado no es válido. Intenta nuevamente.");
-      return;
-    }
-
-    fetch("https://formspree.io/f/xeokwopp", {
-      method: "POST",
-      body: formData
-    })
-    .then(() => {
-      // Redirige al perfil si el código es válido
-      window.location.href = "https://miguel-pro343.github.io/Circulo-Real/Perfil.html";
-    })
-    .catch(error => {
-      alert("Ocurrió un error. Intenta nuevamente.");
-      console.error(error);
+      fetch("https://formspree.io/f/xeokwopp", {
+        method: "POST",
+        body: formData
+      })
+      .then(() => {
+        window.location.href = "https://miguel-pro343.github.io/Circulo-Real/Perfil.html";
+      })
+      .catch(error => {
+        alert("Ocurrió un error. Intenta nuevamente.");
+        console.error(error);
+      });
     });
-  });
-</script>
-
-
-  <button type="submit">Registrar compra</button>
-</form>
+  </script>
 
 </body>
 </html>
