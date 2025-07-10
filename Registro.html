@@ -77,7 +77,8 @@
   </form>
 
 <script>
-  const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"];
+  const codigosValidos = ["CR001-UN", "CR002-UN", "CR003-UN"]; // Puedes agregar más
+
   const form = document.getElementById('registroForm');
 
   form.addEventListener('submit', function (e) {
@@ -93,12 +94,28 @@
       return;
     }
 
-    // Guardar los datos en localStorage antes de redirigir
+    // Comprobar si el código ya fue usado
+    const codigosUsados = JSON.parse(localStorage.getItem("codigosUsados") || "[]");
+    if (codigosUsados.includes(codigo)) {
+      alert("Este código ya ha sido registrado anteriormente.");
+      return;
+    }
+
+    // Guardar en localStorage
     localStorage.setItem("nombre", nombre);
     localStorage.setItem("correo", correo);
     localStorage.setItem("codigo", codigo);
 
-    // Enviar datos a Formspree
+    // Sumar puntos
+    let puntos = parseInt(localStorage.getItem("puntos") || "0");
+    puntos += 10;
+    localStorage.setItem("puntos", puntos);
+
+    // Registrar este código como usado
+    codigosUsados.push(codigo);
+    localStorage.setItem("codigosUsados", JSON.stringify(codigosUsados));
+
+    // Enviar a Formspree
     fetch("https://formspree.io/f/xeokwopp", {
       method: "POST",
       headers: {
@@ -108,11 +125,10 @@
     })
     .then(response => {
       if (response.ok) {
-        // Redirigir al perfil
         window.location.href = "https://miguel-pro343.github.io/Circulo-Real/Perfil.html";
       } else {
         return response.json().then(data => {
-          alert(data.error || "Ocurrió un error. Intenta nuevamente.");
+          alert(data.error || "Ocurrió un error al registrar. Intenta nuevamente.");
         });
       }
     })
