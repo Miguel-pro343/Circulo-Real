@@ -241,52 +241,54 @@
   </div>
 
   <script>
-    function mostrar(id) {
-      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
-      document.getElementById(id).classList.add('activa');
+  function mostrar(id) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
+    document.getElementById(id).classList.add('activa');
 
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-      event.target.classList.add('active');
-    }
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+  }
 
-    function toggleMenu() {
-      document.getElementById('sideMenu').classList.toggle('open');
-    }
+  function toggleMenu() {
+    document.getElementById('sideMenu').classList.toggle('open');
+  }
 
-    function closeMenu() {
-      document.getElementById('sideMenu').classList.remove('open');
-    }
+  function closeMenu() {
+    document.getElementById('sideMenu').classList.remove('open');
+  }
 
-    // Mostrar datos del aliado desde localStorage
-    const nombre = localStorage.getItem("nombre");
-    const correo = localStorage.getItem("correo");
-    const codigo = localStorage.getItem("codigo");
+  // Mostrar datos del aliado desde localStorage
+  const nombre = localStorage.getItem("nombre");
+  const correo = localStorage.getItem("correo");
+  const codigo = localStorage.getItem("codigo");
+  const puntos = parseInt(localStorage.getItem("puntos")) || 0;
 
-    if (nombre && correo && codigo) {
-      document.getElementById("bienvenida").textContent = `Bienvenido, ${nombre}`;
-      document.getElementById("correo").textContent = correo;
-      document.getElementById("codigo").textContent = codigo;
+  if (nombre && correo && codigo) {
+    document.getElementById("bienvenida").textContent = `Bienvenido, ${nombre}`;
+    document.getElementById("correo").textContent = correo;
+    document.getElementById("codigo").textContent = codigo;
 
-      // Asignar nivel por código
-      let nivel = "";
-      if (codigo === "CR001-UN") nivel = "🌟 Miembro Oro";
-      else if (codigo === "CR002-UN") nivel = "🥈 Miembro Plata";
-      else if (codigo === "CR003-UN") nivel = "🥉 Miembro Bronce";
-      else nivel = "🔰 Miembro Nuevo";
+    // Asignar nivel por código
+    let nivel = "";
+    if (codigo === "CR001-UN") nivel = "🌟 Miembro Oro";
+    else if (codigo === "CR002-UN") nivel = "🥈 Miembro Plata";
+    else if (codigo === "CR003-UN") nivel = "🥉 Miembro Bronce";
+    else nivel = "🔰 Miembro Nuevo";
 
-      document.getElementById("nivel").textContent = nivel;
+    document.getElementById("nivel").textContent = `${nivel} | 🎯 Puntos acumulados: ${puntos}`;
 
-      // Mensaje de bienvenida
-      document.getElementById("mensajeAliado").textContent =
-        "Gracias por formar parte de Círculo Real. Tu participación te brinda acceso exclusivo a recompensas, experiencias premium y el legado del mejor café de altura.";
-    } else {
-      document.getElementById("bienvenida").textContent = "Acceso no autorizado";
-      document.getElementById("correo").textContent = "No disponible";
-      document.getElementById("codigo").textContent = "No disponible";
-      document.getElementById("mensajeAliado").textContent =
-        "Por favor, regístrate desde el formulario para acceder al panel.";
-    }
-  </script>
+    // Mensaje de bienvenida
+    document.getElementById("mensajeAliado").textContent =
+      "Gracias por formar parte de Círculo Real. Tu participación te brinda acceso exclusivo a recompensas, experiencias premium y el legado del mejor café de altura.";
+  } else {
+    document.getElementById("bienvenida").textContent = "Acceso no autorizado";
+    document.getElementById("correo").textContent = "No disponible";
+    document.getElementById("codigo").textContent = "No disponible";
+    document.getElementById("nivel").textContent = "";
+    document.getElementById("mensajeAliado").textContent =
+      "Por favor, regístrate desde el formulario para acceder al panel.";
+  }
+</script>
 
 </body>
 </html>
